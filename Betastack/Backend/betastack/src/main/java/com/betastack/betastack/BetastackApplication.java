@@ -1,0 +1,13 @@
+package com.betastack.betastack;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BetastackApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BetastackApplication.class, args);
+	}
+
+}
