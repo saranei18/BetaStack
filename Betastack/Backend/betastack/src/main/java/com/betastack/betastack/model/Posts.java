@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 @Entity
 public class Posts {
@@ -18,11 +20,11 @@ public class Posts {
         this.id = id;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -50,11 +52,11 @@ public class Posts {
         this.name = name;
     }
 
-    public String getCreated_time() {
+    public Date getCreated_time() {
         return created_time;
     }
 
-    public void setCreated_time(String created_time) {
+    public void setCreated_time(Date created_time) {
         this.created_time = created_time;
     }
 
@@ -90,14 +92,23 @@ public class Posts {
         this.website = website;
     }
 
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
+    }
+
     private String name;
     private String description;
-    private String created_time;
+    private Date created_time;
+    private float rating;
     private String tagline;
     private String topics;
     private String slug;
     private String website;
 
-    int rating;
-    int reviewsCount;
+    private int reviewsCount;
+    private int commentsCount;
 }
