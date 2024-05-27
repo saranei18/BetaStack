@@ -1,8 +1,8 @@
 package com.betastack.betastack.controller;
 
 import com.betastack.betastack.model.HomeResponse;
-import com.betastack.betastack.model.Posts;
-import com.betastack.betastack.model.PostsResponse;
+import com.betastack.betastack.model.Product;
+import com.betastack.betastack.model.ProductResponse;
 import com.betastack.betastack.service.BetaStackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,7 +20,7 @@ public class BetaStackController {
     private BetaStackService service;
 
     @GetMapping("posts")
-    PostsResponse getAllPosts(){
+    ProductResponse getAllPosts(){
         System.out.println("Inside Get posts Mapping");
         return service.getAllPosts();
     }
@@ -32,7 +32,7 @@ public class BetaStackController {
     }
 
     @GetMapping("posts/{id}")
-    List<Posts> getLimitPosts(@PathVariable("id") int pageno){
+    List<Product> getLimitPosts(@PathVariable("id") int pageno){
         System.out.println("Getting posts for pageNo "+pageno);
         return service.getLimitedPosts(pageno);
     }

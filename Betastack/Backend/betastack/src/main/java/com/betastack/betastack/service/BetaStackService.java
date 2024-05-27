@@ -1,9 +1,9 @@
 package com.betastack.betastack.service;
 
 import com.betastack.betastack.model.HomeResponse;
-import com.betastack.betastack.model.PostData;
-import com.betastack.betastack.model.Posts;
-import com.betastack.betastack.model.PostsResponse;
+import com.betastack.betastack.model.Product;
+import com.betastack.betastack.model.ProductData;
+import com.betastack.betastack.model.ProductResponse;
 import com.betastack.betastack.repo.CommentsRepo;
 import com.betastack.betastack.repo.PostsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -23,18 +25,18 @@ public class BetaStackService {
     private CommentsRepo cRepo;
 
     @Autowired
-    public List<Posts> sqlPosts;
+    public List<Product> sqlPosts;
 
     @Autowired
-    public List<PostData> postData;
+    public List<ProductData> postData;
 
     @Autowired
-    public PostsResponse postsResponse;
+    public ProductResponse postsResponse;
 
     @Autowired
     public HomeResponse homeResponse;
 
-    public PostsResponse getAllPosts() {
+    public ProductResponse getAllPosts() {
         System.out.println("Getting All Posts");
         sqlPosts = pRepo.findAll();
 
@@ -52,9 +54,9 @@ public class BetaStackService {
         return postsResponse;
     }
 
-    public List<Posts> getLimitedPosts(int pageno) {
+    public List<Product> getLimitedPosts(int pageno) {
         Pageable pageable = PageRequest.of(pageno, 10);
-        Page<Posts> postPage = pRepo.findAll(pageable);
+        Page<Product> postPage = pRepo.findAll(pageable);
         return postPage.getContent();
     }
 
