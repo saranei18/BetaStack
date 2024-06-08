@@ -1,9 +1,6 @@
 package com.betastack.betastack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="commentid")
     private int commentId;
 
     public int getCommentId() {
@@ -37,16 +35,18 @@ public class Comments {
         this.comment = comment;
     }
 
-    public int getTotalVotes() {
+    public Integer getTotalVotes() {
         return totalVotes;
     }
 
-    public void setTotalVotes(int totalVotes) {
+    public void setTotalVotes(Integer totalVotes) {
         this.totalVotes = totalVotes;
     }
 
+    @Column(name="comment")
     private String comment;
-
-    private int totalVotes;
+    @Column(name="total_votes")
+    private Integer totalVotes;
+    @Column(name="id")
     private int id;
 }

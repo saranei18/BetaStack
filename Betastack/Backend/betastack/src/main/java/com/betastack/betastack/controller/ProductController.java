@@ -30,11 +30,13 @@ public class ProductController {
         return service.getProductsFromPageNo(pageNo, pageSize);
     }
 
+    //To Update the product Details
     @PutMapping("{id}")
     ProductResponse updateProduct(@RequestBody Products product){
         return service.updateProduct(product);
     }
 
+    //To delete the product
     @DeleteMapping("{id}")
     ProductResponse deleteProduct(@RequestBody Products product){
         return service.deleteProduct(product);

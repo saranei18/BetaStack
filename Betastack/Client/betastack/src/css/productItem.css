@@ -1,0 +1,87 @@
+.product-item {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .product-image {
+    width: 90px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+
+  .product-image-logo {
+    width: 180px;
+    height: 100px;
+  }
+
+  .visit-btn {
+    margin-top: 10px;
+    padding-left: 105px;
+  }
+  
+  .product-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-title {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  
+  .product-tagline {
+    font-weight: normal;
+  }
+  
+  .product-categories {
+    display: flex;
+    margin-top: 5px;
+  }
+  
+  .product-category {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    margin-right: 10px;
+  }
+
+  .product-rating {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    background-color: #ffe100;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+  }
+
+  .product-description {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    margin-right: 10px;
+  }
+  
+  .product-category:first-child {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .product-itemBt:hover {
+    cursor: pointer;
+  }
+
+  .card {
+    transition: background-color 1.0s ease;
+  }
+  
+  .card:hover {
+    background-color: #cce5ff; /* Change this color to whatever shade of blue you prefer */
+  }

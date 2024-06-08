@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CommentsRepo extends JpaRepository<Comments, Integer> {
-    List<Comments> findById(int id);
-    boolean existsBycommentid(int commentid);
+    List<Comments> findByid(int id);
+   // boolean existsBycommentid(int commentid);
 }
