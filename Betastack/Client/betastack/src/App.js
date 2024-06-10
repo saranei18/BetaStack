@@ -7,6 +7,7 @@ import Products from './components/Products';
 import News from './components/News';
 import Discussions from './components/Discussions';
 import Events from './components/Events';
+import ProductDetail from './components/ProductDetail';
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         <div className='container'>
           <Routes>
             <Route path='/products' element={<Products/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/product/:id" element={<ProductDetail/>}></Route>
           </Routes>
           <Routes>
             <Route path='/news' element={<News/>}></Route>

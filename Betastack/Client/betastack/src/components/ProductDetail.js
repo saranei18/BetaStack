@@ -1,11 +1,15 @@
 import React from 'react'
+import { useLocation } from 'react-router';
 
 function ProductDetail() {
+    const { state } = useLocation();
+    const { product } = state;
+
     return (
-        <div class="modal-dialog modal-dialog-centered">
-            Hi
-        </div>
-    )
+        <>
+
+        </>
+    );
 }
 
 export default ProductDetail

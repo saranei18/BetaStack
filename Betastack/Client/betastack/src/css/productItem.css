@@ -73,6 +73,15 @@
     background-color: #007bff;
     color: white;
   }
+
+  .custom-modal-size {
+    max-width: 90%;
+    height: 80vh; /* Set the height to 80% of the viewport height */
+  }
+  
+  .custom-modal-content {
+    height: 100%;
+  }
   
   .product-itemBt:hover {
     cursor: pointer;
