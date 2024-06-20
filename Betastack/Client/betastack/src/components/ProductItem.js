@@ -1,10 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../css/productItem.css'
 import { useNavigate } from 'react-router';
+import productContext from '../context/productContext';
+import Comments from './Comments';
 
 function ProductItem(props) {
+  const context = useContext(productContext);
+  const comments = context.comments;
+  const getProductComments = context.getProductComments;
   const product = props.product;
+
+  useEffect(() => {
+    if (product && getProductComments) {
+      getProductComments(product.id);
+    }
+  }, []);
+
   const [showModal, setShowModal] = useState(false);
+  const [currentComment, setcurrentComment] = useState('');
   let navigate = useNavigate();
   const modalButtonRef = useRef(null);
 
@@ -21,6 +34,12 @@ function ProductItem(props) {
 
   const visitButtonClick = (event) => {
     event.stopPropagation();
+  };
+
+  const handleCommentSubmit = (event) => {
+    event.preventDefault();
+    console.log('Comment submitted:', currentComment);
+    setcurrentComment(''); // Clear the comment input
   };
 
   const closeModal = () => {
@@ -60,21 +79,45 @@ function ProductItem(props) {
       </button>
 
       {showModal && (
-       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-       <div className="modal-dialog modal-dialog-centered custom-modal-size" role="document">
-         <div className="modal-content custom-modal-content">
-           <div className="modal-header">
-             <h5 className="modal-title" id="exampleModalLabel">{product.name}</h5>
-             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeModal}></button>
-           </div>
-           <div className="modal-body">
-             <p>{product.description}</p>
-             <p>Rating: {product.rating}</p>
-             <a href={product.website} target="_blank" rel="noopener noreferrer">Visit the Product</a>
-           </div>
-         </div>
-       </div>
-     </div>
+        <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered custom-modal-size modal-dialog-scrollable" style={{ maxWidth: '80%' }} role="document">
+            <div className="modal-content custom-modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">{product.name}</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeModal}></button>
+              </div>
+              <div className="modal-body">
+                <p>{product.description}</p>
+                <p>Rating: {product.rating}</p>
+                <a href={product.website} target="_blank" rel="noopener noreferrer">Visit the Product</a>
+                <div className="comments-section mt-3">
+                  <form onSubmit={handleCommentSubmit} className="d-flex justify-content-center align-items-center">
+                    <input
+                      type="text"
+                      className="form-control me-2"
+                      value={currentComment}
+                      onChange={(e) => setcurrentComment(e.target.value)}
+                      placeholder="Add a comment"
+                      style={{ width: '600px' }}
+                    />
+                    <button type="submit" className="btn btn-success">Comment</button>
+                  </form>
+                  <br></br>
+                  <h6 className='d-flex justify-content-center align-items-center'>Comments</h6>
+                  <div className="scrollable-comments">
+                    {comments && comments.length > 0 ? (
+                      comments.map((comment, index) => (
+                        <Comments key={index} comment={comment} />
+                      ))
+                    ) : (
+                      <p>No Comments available</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   )

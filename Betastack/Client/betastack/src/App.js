@@ -8,6 +8,8 @@ import News from './components/News';
 import Discussions from './components/Discussions';
 import Events from './components/Events';
 import ProductDetail from './components/ProductDetail';
+import Comments from './components/Comments';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function App() {
   return (
@@ -23,7 +25,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetail/>}></Route>
           </Routes>
           <Routes>
-            <Route path='/news' element={<News/>}></Route>
+            <Route path='/news' element={<Comments/>}></Route>
           </Routes>
           <Routes>
             <Route path='/discussions' element={<Discussions/>}></Route>

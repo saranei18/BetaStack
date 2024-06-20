@@ -7,12 +7,15 @@ const ProductState = (props) =>{
   const productsInitial =[];
 
   const [products, setProducts] = useState(productsInitial);
+  const [comments, setcomments] = useState([]);
+  
 
   const getProducts = async () => {
-    const response = await fetch(`${host}/api/data/product/2/10`, {
+    const response = await fetch(`${host}/api/data/product/1/20`, {
       method:"GET",
       headers:{
-        "Content-Type" : "application/json"
+        "Content-Type" : "application/json",
+        "ngrok-skip-browser-warning" : "1"
       },
     });
 
@@ -21,8 +24,30 @@ const ProductState = (props) =>{
     setProducts(json);
   }
 
+  const getProductComments = async (id) => {
+    const response = await fetch(`${host}/api/data/product/comments/${id}`, {
+      method:"GET",
+      headers:{
+        "Content-Type" : "application/json",
+        "ngrok-skip-browser-warning" : "1"
+      },
+    });
+
+    const json = await response.json();
+
+    setcomments(json);
+  }
+
+  const updateProductComments = async (comment) => {
+    
+    
+    return 1;
+  }
+  
+  
+
   return (
-    <productContext.Provider value = {{products, getProducts}}>
+    <productContext.Provider value = {{products, getProducts, comments, getProductComments, updateProductComments}}>
       {props.children}
     </productContext.Provider>
   )

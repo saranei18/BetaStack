@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/data/product/comments")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins={"http://localhost:3000", "http://172.24.92.235:3000", "https://583b-139-167-79-126.ngrok-free.app"})
 public class CommentsController {
 
     @Autowired
@@ -25,6 +25,7 @@ public class CommentsController {
 
     @PutMapping("/")
     CommentResponse updateComment(@RequestBody Comments comment){
+        System.out.println("Updating the Comments");
         return service.updateComment(comment);
     }
 
