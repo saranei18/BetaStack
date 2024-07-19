@@ -12,4 +12,7 @@ public interface ProductRepo extends JpaRepository<Products, Integer> {
 
     @Query("SELECT count(p.id) from Products p")
     int getTotalProductCount();
+
+    @Query("SELECT p from Products p WHERE p.userid = :userid")
+    List<Products> findByuserid(int userid);
 }

@@ -1,11 +1,9 @@
 package com.betastack.betastack.service;
 
-import com.betastack.betastack.model.HomeResponse;
-import com.betastack.betastack.model.ProductData;
-import com.betastack.betastack.model.ProductResponse;
-import com.betastack.betastack.model.Products;
+import com.betastack.betastack.model.*;
 import com.betastack.betastack.repo.CommentsRepo;
 import com.betastack.betastack.repo.ProductRepo;
+import com.betastack.betastack.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +30,12 @@ public class ProductService {
 
     @Autowired
     public HomeResponse homeResponse;
+
+    @Autowired
+    public JwtService jwtService;
+
+    @Autowired
+    public UserRepo userRepo;
 
     public List<Products> getProductsFromPageNo(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -69,6 +73,31 @@ public class ProductService {
         pRepo.delete(product);
 
         if(!pRepo.existsById(product.getId())){
+            productResponse.setStatus("success");
+        } else{
+            productResponse.setStatus("failed");
+        }
+
+        return productResponse;
+    }
+
+    public List<Products> getProductsUserSpecific(String usertoken) {
+        User user = userRepo.findByUsername(jwtService.extractUserName(usertoken.substring(7)));
+
+        if(user.getId() != 0){
+            return pRepo.findByuserid(user.getId());
+        }else {
+            return null;
+        }
+    }
+
+    public ProductResponse addNewProduct(Products product, String usertoken) {
+
+        User user = userRepo.findByUsername(jwtService.extractUserName(usertoken.substring(7)));
+        product.setUserid(user.getId());
+
+        this.product = pRepo.save(product);
+        if(this.product.getId() != 0){
             productResponse.setStatus("success");
         } else{
             productResponse.setStatus("failed");

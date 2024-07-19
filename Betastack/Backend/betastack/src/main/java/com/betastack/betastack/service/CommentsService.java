@@ -21,6 +21,18 @@ public class CommentsService {
         return cRepo.findByid(id);
     }
 
+    public CommentResponse addComment(Comments comment){
+        this.comment = cRepo.save(comment);
+
+        if(this.comment.getCommentId() != 0 && this.comment.getCommentId() == comment.getCommentId()){
+            commentResponse.setStatus("success");
+        }else{
+            commentResponse.setStatus("failed");
+        }
+
+        return commentResponse;
+    }
+
     public CommentResponse updateComment(Comments comment) {
         this.comment = cRepo.save(comment);
 
@@ -34,12 +46,12 @@ public class CommentsService {
     }
 
     public CommentResponse deleteComment(Comments comment){
-        /*cRepo.delete(comment);
-        if(!cRepo.existsBycommentid(comment.getCommentId())){
+        cRepo.delete(comment);
+        if(!cRepo.existsBycommentId(comment.getCommentId())){
             commentResponse.setStatus("success");
         } else {
             commentResponse.setStatus("failed");
-        }*/
+        }
 
         return commentResponse;
     }

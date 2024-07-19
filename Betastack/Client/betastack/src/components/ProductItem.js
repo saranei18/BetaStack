@@ -2,23 +2,19 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../css/productItem.css'
 import { useNavigate } from 'react-router';
 import productContext from '../context/productContext';
-import Comments from './Comments';
 
 function ProductItem(props) {
+  
   const context = useContext(productContext);
   const comments = context.comments;
   const getProductComments = context.getProductComments;
   const product = props.product;
 
-  useEffect(() => {
-    if (product && getProductComments) {
-      getProductComments(product.id);
-    }
-  }, []);
-
   const [showModal, setShowModal] = useState(false);
   const [currentComment, setcurrentComment] = useState('');
-  let navigate = useNavigate();
+  const [buttonName, setButtonName] = useState('Comment');
+  const [editComment, setEditComment] = useState(null);
+
   const modalButtonRef = useRef(null);
 
   if (product.description.length === 0) {
@@ -26,10 +22,25 @@ function ProductItem(props) {
   }
 
   const productItemClick = () => {
+    getProductComments(product.id);
     setShowModal(true);
     setTimeout(() => {
       modalButtonRef.current.click();
     }, 100); // Adjust the delay as needed
+  };
+
+  const commentEditClick = (event, comment) => {
+    event.preventDefault();
+    console.log("Clicked Comment Edit");
+    setcurrentComment(comment.comment);
+    setEditComment(comment);
+    setButtonName("Edit");
+  };
+
+  const deleteEditClick = (event, delComment) => {
+    event.preventDefault();
+    console.log("Clicked Comment Delete");
+    context.deleteComment(delComment.commentId, delComment.username, delComment.comment, delComment.totalVotes, delComment.id);
   };
 
   const visitButtonClick = (event) => {
@@ -39,7 +50,22 @@ function ProductItem(props) {
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     console.log('Comment submitted:', currentComment);
-    setcurrentComment(''); // Clear the comment input
+
+    if (buttonName === "Edit") {
+      console.log("Edit Comment");
+      console.log(editComment.id);
+      editComment.comment = currentComment;
+      editComment.totalVotes = 0;
+      context.updateComment(editComment.commentId, editComment.username, editComment.comment, editComment.totalVotes, editComment.id);
+
+      setcurrentComment('');
+      setButtonName("Comment");
+    }
+    else {
+      context.addNewComment(currentComment, product.id);
+      setcurrentComment(''); // Clear the comment input
+      //setShowModal(false);
+    }
   };
 
   const closeModal = () => {
@@ -100,14 +126,41 @@ function ProductItem(props) {
                       placeholder="Add a comment"
                       style={{ width: '600px' }}
                     />
-                    <button type="submit" className="btn btn-success">Comment</button>
+                    <button type="submit" className="btn btn-success">{buttonName}</button>
                   </form>
                   <br></br>
                   <h6 className='d-flex justify-content-center align-items-center'>Comments</h6>
                   <div className="scrollable-comments">
                     {comments && comments.length > 0 ? (
                       comments.map((comment, index) => (
-                        <Comments key={index} comment={comment} />
+                        <div className="row d-flex justify-content-center" key={index}>
+                          <div className="col-md-8 col-lg-6">
+                            <div className="card shadow-0 border" style={{ backgroundColor: '#f0f2f5' }}>
+                              <div className="card-body p-4">
+                                <div className="card mb-4">
+                                  <div className="card-body">
+                                    <p>{comment.comment}</p>
+                                    <div className="d-flex justify-content-between">
+                                      <div className="d-flex flex-row align-items-center">
+                                        <p className="small mb-0 ms-2">{context.userName === comment.username ? (comment.username + "(You)") : comment.username}</p>
+                                      </div>
+                                      <div className="d-flex flex-row align-items-center">
+                                        <p className="small text-muted mb-0">{comment.totalVotes}</p>
+                                        <i className="far fa-thumbs-up mx-2 fa-xs text-body product-itemBt text-primary" style={{ marginTop: '-0.16rem' }} ></i>
+                                        {context.userName === comment.username && (
+                                          <>
+                                            <p className="showcursor small text-muted mb-0" onClick={(event) => commentEditClick(event, comment)}>Edit</p>
+                                            <i className="far fa-trash-alt mx-2 fa-xs text-body product-itemBt text-primary showcursor" onClick={(event) => deleteEditClick(event, comment)} style={{ marginTop: '-0.16rem' }}></i>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       ))
                     ) : (
                       <p>No Comments available</p>
@@ -119,6 +172,7 @@ function ProductItem(props) {
           </div>
         </div>
       )}
+
     </>
   )
 }

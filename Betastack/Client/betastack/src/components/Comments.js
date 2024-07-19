@@ -32,9 +32,8 @@ function Comments(props) {
                   <p>{comment.comment}</p>
                   <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar" width="25"
-                        height="25" />
-                      <p class="small mb-0 ms-2">{props.comment.id}</p>
+                      
+                      <p class="small mb-0 ms-2">{props.comment.username}</p>
                     </div>
                     <div class="d-flex flex-row align-items-center">
                       <p class="small text-muted mb-0">Upvote?</p>

@@ -30,14 +30,27 @@ public class ProductController {
         return service.getProductsFromPageNo(pageNo, pageSize);
     }
 
+    @PostMapping("/")
+    ProductResponse addNewProduct(@RequestHeader(value = "Authorization") String authorizationHeader, @RequestBody Products product){
+        System.out.println("Adding new Product");
+        return service.addNewProduct(product, authorizationHeader);
+    }
+
+    @GetMapping("/user")
+    List<Products> getUserProducts(@RequestHeader(value = "Authorization") String authorizationHeader){
+        System.out.println("Getting user products for user");
+        return service.getProductsUserSpecific(authorizationHeader);
+    }
+
     //To Update the product Details
-    @PutMapping("{id}")
+    @PutMapping("/")
     ProductResponse updateProduct(@RequestBody Products product){
+        System.out.println("Gng to update tht product");
         return service.updateProduct(product);
     }
 
     //To delete the product
-    @DeleteMapping("{id}")
+    @DeleteMapping("/")
     ProductResponse deleteProduct(@RequestBody Products product){
         return service.deleteProduct(product);
     }
@@ -46,4 +59,6 @@ public class ProductController {
     String sendHelloWorld(){
         return "<b>HelloWorld</b>";
     }
+
+
 }

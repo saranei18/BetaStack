@@ -1,7 +1,6 @@
 package com.betastack.betastack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,7 +9,19 @@ import java.util.Date;
 @Entity
 public class Products {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id = 0;
+
+    @Column(name="userid")
+    private int userid;
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
 
     public int getId() {
         return id;
@@ -52,11 +63,11 @@ public class Products {
         this.name = name;
     }
 
-    public Date getCreated_time() {
+    public String getCreated_time() {
         return created_time;
     }
 
-    public void setCreated_time(Date created_time) {
+    public void setCreated_time(String created_time) {
         this.created_time = created_time;
     }
 
@@ -102,13 +113,14 @@ public class Products {
 
     private String name;
     private String description;
-    private Date created_time;
+    private String created_time;
     private float rating;
     private String tagline;
     private String topics;
     private String slug;
     private String website;
-
+    @Column(name="reviews_count")
     private int reviewsCount;
+    @Column(name="comments_count")
     private int commentsCount;
 }

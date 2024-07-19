@@ -10,9 +10,19 @@ public class Comments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="commentid")
     private int commentId;
+    @Column(name="username")
+    private String username;
 
     public int getCommentId() {
         return commentId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setCommentId(int commentId) {

@@ -4,6 +4,7 @@ import com.betastack.betastack.model.CommentResponse;
 import com.betastack.betastack.model.Comments;
 import com.betastack.betastack.repo.CommentsRepo;
 import com.betastack.betastack.service.CommentsService;
+import com.betastack.betastack.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/data/product/comments")
-@CrossOrigin(origins={"http://localhost:3000", "http://172.24.92.235:3000", "https://583b-139-167-79-126.ngrok-free.app"})
+@CrossOrigin(origins={"http://localhost:3000"})
 public class CommentsController {
 
     @Autowired
     private CommentsService service;
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("/{id}")
     List<Comments> getComments(@PathVariable("id") int productId){
@@ -23,13 +26,21 @@ public class CommentsController {
         return service.getComments(productId);
     }
 
-    @PutMapping("/")
-    CommentResponse updateComment(@RequestBody Comments comment){
+    @PostMapping("/edit")
+    public CommentResponse updateComment(@RequestBody Comments comment){
         System.out.println("Updating the Comments");
         return service.updateComment(comment);
     }
 
-    @DeleteMapping("/")
+    @PostMapping("/")
+    public CommentResponse addComment(@RequestBody Comments comment,
+                           @RequestHeader(value = "Authorization") String authorizationHeader) {
+        comment.setUsername(jwtService.extractUserName(authorizationHeader.substring(7)));
+        comment.setTotalVotes(0);
+        return service.addComment(comment);
+    }
+
+    public @DeleteMapping("/")
     CommentResponse deleteComment(@RequestBody Comments comment){
         return service.deleteComment(comment);
     }
